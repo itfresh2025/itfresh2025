@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 AdminDB Production Deployment Script
-Сервер: 82.26.198.97 (Debian)
+Сервер: 212.69.85.169 (Debian)
 Домен: adminbd.itfresh.ru
 """
 
@@ -12,7 +12,7 @@ import os
 import sys
 import stat
 
-HOST = "82.26.198.97"
+HOST = "212.69.85.169"
 USER = "root"
 OLD_PASSWORD = "p6ZCE8jIU_"
 NEW_PASSWORD = "Itfresh2012!"
