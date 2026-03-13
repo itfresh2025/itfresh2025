@@ -167,18 +167,33 @@ ssh itfresh@212.69.85.169 "sudo systemctl restart d-brain-bot"
 | Параметр | Значение |
 |----------|----------|
 | Репо | https://github.com/itfresh2025/Brain |
-| SSH ключ на сервере | `~/.ssh/github_brain` |
+| SSH ключ на сервере | `/home/itfresh/.ssh/github_brain` |
 | Локальный клон на сервере | `/home/itfresh/agent-second-brain/` |
 
-### Правило: ВСЕГДА пушить изменения в GitHub
+### ⚠️ ОБЯЗАТЕЛЬНОЕ ПРАВИЛО: ВСЕГДА пушить в GitHub
 
-После любых изменений по любому проекту — коммит и пуш:
+**После ЛЮБЫХ изменений по ЛЮБОМУ проекту — сразу коммит и пуш в GitHub через сервер.**
 
+Шаг 1 — скопировать изменённые файлы на сервер (если изменения локальные):
 ```bash
-# С сервера
-GIT_SSH_COMMAND='ssh -i ~/.ssh/github_brain' git -C /home/itfresh/agent-second-brain add -A
-GIT_SSH_COMMAND='ssh -i ~/.ssh/github_brain' git -C /home/itfresh/agent-second-brain commit -m "описание изменений"
-GIT_SSH_COMMAND='ssh -i ~/.ssh/github_brain' git -C /home/itfresh/agent-second-brain push
+scp -i ~/.ssh/brain_vps ФАЙЛ root@212.69.85.169:/home/itfresh/agent-second-brain/ПУТЬ
+```
+
+Шаг 2 — закоммитить и запушить в GitHub с сервера:
+```bash
+ssh itfresh@212.69.85.169 "
+  cd /home/itfresh/agent-second-brain &&
+  git add -A &&
+  git diff --cached --quiet || (
+    GIT_SSH_COMMAND='ssh -i ~/.ssh/github_brain' git commit -m 'ОПИСАНИЕ ИЗМЕНЕНИЙ' &&
+    GIT_SSH_COMMAND='ssh -i ~/.ssh/github_brain' git push origin main
+  )
+"
+```
+
+Или одной командой (универсальный пуш):
+```bash
+ssh itfresh@212.69.85.169 "cd /home/itfresh/agent-second-brain && git add -A && git diff --cached --quiet || (GIT_SSH_COMMAND='ssh -i /home/itfresh/.ssh/github_brain' git commit -m 'update' && GIT_SSH_COMMAND='ssh -i /home/itfresh/.ssh/github_brain' git push origin main)"
 ```
 
 ### Структура репо на GitHub
