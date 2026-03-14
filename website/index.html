@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="itfresh2025 — Full Stack Developer. Go, Rust, JavaScript, Nginx, Docker, WireGuard." />
+  <title>itfresh2025 — Developer</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ── CANVAS BACKGROUND ── -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- ── NAVBAR ── -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-logo">
+      <span class="logo-bracket">&lt;</span>itfresh2025<span class="logo-bracket">/&gt;</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#about">about</a></li>
+      <li><a href="#skills">skills</a></li>
+      <li><a href="#projects">projects</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+    <button class="burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="hero" id="about">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Available for collaboration
+      </div>
+      <h1 class="hero-title">
+        Hi, I'm <span class="gradient-text">itfresh2025</span>
+      </h1>
+      <div class="hero-subtitle">
+        <span class="typed-text" id="typed"></span><span class="cursor">|</span>
+      </div>
+      <p class="hero-desc">
+        Full Stack Developer passionate about building fast, secure, and scalable systems.
+        I work with <strong>Go</strong>, <strong>Rust</strong>, <strong>JavaScript</strong>,
+        and love crafting clean infrastructure with <strong>Nginx</strong>, <strong>Docker</strong>,
+        and <strong>WireGuard</strong>.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">View Projects</a>
+        <a href="#contact" class="btn btn-outline">Get in Touch</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-num">2+</span>
+          <span class="stat-label">Years coding</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">10+</span>
+          <span class="stat-label">Projects</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">∞</span>
+          <span class="stat-label">Learning</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="terminal">
+        <div class="terminal-header">
+          <span class="t-dot red"></span>
+          <span class="t-dot yellow"></span>
+          <span class="t-dot green"></span>
+          <span class="t-title">~/itfresh2025 — bash</span>
+        </div>
+        <div class="terminal-body" id="terminal-body">
+          <div class="t-line"><span class="t-prompt">$ </span>whoami</div>
+          <div class="t-line t-out">itfresh2025</div>
+          <div class="t-line"><span class="t-prompt">$ </span>cat about.txt</div>
+          <div class="t-line t-out">Full Stack Developer</div>
+          <div class="t-line t-out">Go · Rust · JS · Shell</div>
+          <div class="t-line t-out">Nginx · Docker · WireGuard</div>
+          <div class="t-line"><span class="t-prompt">$ </span>echo $STATUS</div>
+          <div class="t-line t-out t-green">open_to_work=true</div>
+          <div class="t-line"><span class="t-prompt">$ </span><span class="t-blink">_</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SKILLS ── -->
+  <section class="section" id="skills">
+    <div class="container">
+      <h2 class="section-title">
+        <span class="section-num">01.</span> Tech Stack
+      </h2>
+      <div class="skills-grid">
+
+        <div class="skill-card" data-delay="0">
+          <div class="skill-icon lang">{ }</div>
+          <h3>Languages</h3>
+          <div class="skill-tags">
+            <span class="tag go">Go</span>
+            <span class="tag js">JavaScript</span>
+            <span class="tag rust">Rust</span>
+            <span class="tag shell">Shell</span>
+            <span class="tag html">HTML5</span>
+            <span class="tag css">CSS3</span>
+          </div>
+        </div>
+
+        <div class="skill-card" data-delay="100">
+          <div class="skill-icon tools">⚙</div>
+          <h3>Tools & Platforms</h3>
+          <div class="skill-tags">
+            <span class="tag docker">Docker</span>
+            <span class="tag nginx">Nginx</span>
+            <span class="tag git">Git</span>
+            <span class="tag cf">Cloudflare</span>
+            <span class="tag linux">Linux</span>
+          </div>
+          <div class="skill-bars">
+            <div class="bar-row">
+              <span>Linux</span>
+              <div class="bar"><div class="bar-fill" data-w="95"></div></div>
+            </div>
+            <div class="bar-row">
+              <span>Docker</span>
+              <div class="bar"><div class="bar-fill" data-w="88"></div></div>
+            </div>
+            <div class="bar-row">
+              <span>Nginx</span>
+              <div class="bar"><div class="bar-fill" data-w="85"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="skill-card" data-delay="200">
+          <div class="skill-icon sec">🔒</div>
+          <h3>Networking & Security</h3>
+          <div class="skill-tags">
+            <span class="tag wg">WireGuard</span>
+            <span class="tag xray">Xray</span>
+            <span class="tag tls">TLS/SSL</span>
+            <span class="tag ufw">UFW</span>
+            <span class="tag f2b">fail2ban</span>
+          </div>
+          <div class="skill-bars">
+            <div class="bar-row">
+              <span>WireGuard</span>
+              <div class="bar"><div class="bar-fill" data-w="82"></div></div>
+            </div>
+            <div class="bar-row">
+              <span>TLS/SSL</span>
+              <div class="bar"><div class="bar-fill" data-w="90"></div></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROJECTS ── -->
+  <section class="section section-alt" id="projects">
+    <div class="container">
+      <h2 class="section-title">
+        <span class="section-num">02.</span> Projects
+      </h2>
+      <div class="projects-grid">
+
+        <article class="project-card" data-delay="0">
+          <div class="project-header">
+            <span class="project-icon">🛡</span>
+            <div class="project-links">
+              <a href="https://github.com/itfresh2025" class="icon-link" title="GitHub" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+              </a>
+            </div>
+          </div>
+          <h3>VPN Infrastructure</h3>
+          <p>Self-hosted VPN gateway using WireGuard + Xray with full TLS termination, obfuscation, and automated certificate management via Let's Encrypt.</p>
+          <div class="project-tags">
+            <span>WireGuard</span><span>Xray</span><span>Nginx</span><span>Shell</span>
+          </div>
+        </article>
+
+        <article class="project-card" data-delay="100">
+          <div class="project-header">
+            <span class="project-icon">⚡</span>
+            <div class="project-links">
+              <a href="https://github.com/itfresh2025" class="icon-link" title="GitHub" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+              </a>
+            </div>
+          </div>
+          <h3>Go Microservices</h3>
+          <p>High-performance REST API services written in Go with Docker-based deployment, Nginx reverse proxy, and Cloudflare CDN integration.</p>
+          <div class="project-tags">
+            <span>Go</span><span>Docker</span><span>Nginx</span><span>Cloudflare</span>
+          </div>
+        </article>
+
+        <article class="project-card" data-delay="200">
+          <div class="project-header">
+            <span class="project-icon">🦀</span>
+            <div class="project-links">
+              <a href="https://github.com/itfresh2025" class="icon-link" title="GitHub" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+              </a>
+            </div>
+          </div>
+          <h3>Rust CLI Tools</h3>
+          <p>A collection of blazing-fast command-line utilities written in Rust for system administration, log parsing, and network diagnostics.</p>
+          <div class="project-tags">
+            <span>Rust</span><span>CLI</span><span>Linux</span>
+          </div>
+        </article>
+
+        <article class="project-card" data-delay="300">
+          <div class="project-header">
+            <span class="project-icon">🖥</span>
+            <div class="project-links">
+              <a href="https://github.com/itfresh2025" class="icon-link" title="GitHub" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+              </a>
+            </div>
+          </div>
+          <h3>Debian Auto-Setup</h3>
+          <p>One-command server provisioning script for Debian: Nginx, SSL, UFW, fail2ban, log rotation, and website deployment out of the box.</p>
+          <div class="project-tags">
+            <span>Shell</span><span>Nginx</span><span>Debian</span><span>SSL</span>
+          </div>
+        </article>
+
+      </div>
+
+      <div class="github-stats">
+        <img src="https://github-readme-stats.vercel.app/api?username=itfresh2025&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117" alt="GitHub Stats" loading="lazy" />
+        <img src="https://github-readme-streak-stats.herokuapp.com/?user=itfresh2025&theme=tokyonight&hide_border=true&background=0d1117" alt="GitHub Streak" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ── -->
+  <section class="section" id="contact">
+    <div class="container contact-wrap">
+      <h2 class="section-title">
+        <span class="section-num">03.</span> Get In Touch
+      </h2>
+      <p class="contact-sub">
+        I'm open to collaborations, interesting projects, and new opportunities.
+        Feel free to reach out!
+      </p>
+      <div class="contact-cards">
+        <a href="https://github.com/itfresh2025" class="contact-card" target="_blank" rel="noopener">
+          <svg class="cc-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          <span>GitHub</span>
+          <small>@itfresh2025</small>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <span class="logo-bracket">&lt;</span>itfresh2025<span class="logo-bracket">/&gt;</span>
+      <span>Built with HTML · CSS · JS — Hosted on Debian + Nginx</span>
+      <span>© 2025</span>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
