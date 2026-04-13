@@ -3,7 +3,8 @@
 **Server:** ITfreshFTP (37.228.92.57)
 **OS:** Windows Server 2025 Standard (Build 26100)
 **Setup date:** 2026-04-12
-**Last updated:** 2026-04-13
+**Last updated:** 2026-04-13 (audit)
+**Password:** `Evgeniy@201028!!!` (user: администратор)
 
 ---
 
@@ -21,14 +22,23 @@
 ## ReFS Deduplication
 
 - **Type:** DedupAndCompress (native WS2025 ReFS dedup)
-- **Compression:** ZSTD, level 1
 - **Schedule:** Daily at 02:00, duration 8 hours
-- **CPU limit:** 50%
-- **Min file age:** 0 hours (dedup even new files)
-- **Volumes:** E:, F:, G:
-- **Service:** `refsdedupsvc` (Running)
+- **Service:** `refsdedupsvc` (Running, StartType: Manual)
+- **NTFS Dedup feature:** Installed, but **не настроена** на томах (Get-DedupVolume пустой)
 - **First full run:** started manually 2026-04-13
-- **Status:** Active, processing ~1.4 TB of data
+
+### Статус по томам (аудит 2026-04-13)
+
+| Volume | Enabled | Compression | Compressed | Used | LastRun | Duration | NextRun |
+|--------|---------|-------------|------------|------|---------|----------|---------|
+| E: | True | **ZSTD** level 1 | 295.75 MiB | 861.73 GiB | 13.04.2026 02:00 | 7m 27s | 14.04.2026 02:00 |
+| F: | True | **LZ4** level 1 | 135.09 GiB | 1.94 TiB | 13.04.2026 01:29 | 8h 16m | 14.04.2026 02:00 |
+| G: | True | **LZ4** level 1 | 923.88 MiB | 510.23 GiB | 13.04.2026 01:29 | 52m | 14.04.2026 02:00 |
+
+**Замечания:**
+- E: настроен на ZSTD, а F: и G: на LZ4 — возможно нужно выровнять на ZSTD для лучшего сжатия
+- Deduplication = 0 B на всех томах — дедупликация не срабатывает, только compression
+- NTFS Dedup feature установлена, но **не привязана** ни к одному тому (Get-DedupVolume пустой)
 
 ### Dedup Commands
 
@@ -153,3 +163,48 @@ Desktop shortcut "FTP Monitor" on administrator desktop runs `C:\FTP_Monitor.ps1
 - Current connections (netstat :21)
 - Recent FTP log entries
 - Auto-refreshes every 5 seconds
+
+---
+
+## Audit 2026-04-13
+
+### System Info
+
+| Param | Value |
+|-------|-------|
+| Hostname | ITfreshFTP |
+| OS | Windows Server 2025 Standard Build 26100 |
+| Domain | WORKGROUP |
+| CPU | Intel Xeon E5-2690 v2 @ 3.00GHz (40 vCPU) |
+| RAM | 32 GB (23.6 GB free) |
+| Uptime | ~13.5 hours |
+
+### Key Findings
+
+1. **Veeam Backup & Replication НЕ установлен** на этом сервере (ни в Program Files, ни в реестре)
+2. **FileZilla Server НЕ установлен** — сервис отсутствует, exe не найден. FTP работает через **IIS FTP (ftpsvc)**
+3. **ReFS дедупликация ВКЛЮЧЕНА** на всех 3 томах (E:, F:, G:) — но compression format разный (E: = ZSTD, F:/G: = LZ4)
+4. **Дедупликация = 0 B** — блоки не дедуплицируются, работает только сжатие
+5. **NTFS Dedup feature** установлена, но **не настроена** ни на одном томе
+6. **refsdedupsvc StartType = Manual** — после перезагрузки сервис не запустится автоматически
+7. **Диск D:** смонтирован ISO образ (SSS_X64FRE_RU-RU_DV9, UDF) — можно отмонтировать
+
+### Services Status
+
+| Service | Status | StartType |
+|---------|--------|-----------|
+| ftpsvc (IIS FTP) | Running | Automatic |
+| W3SVC (IIS Web) | Running | Automatic |
+| refsdedupsvc (ReFS Dedup) | Running | **Manual** |
+
+### Firewall (actual open ports)
+
+21, 22, 80, 135, 443, 445, 990, 3389, 5985, 7250, 8172, 9955, 60000-65535 TCP + various UDP
+
+### Actions Required
+
+- [ ] Перевести `refsdedupsvc` в StartType=Automatic
+- [ ] Выровнять compression на ZSTD для F: и G: (сейчас LZ4)
+- [ ] Удалить из документации упоминания FileZilla Server (реально работает IIS FTP)
+- [ ] Отмонтировать ISO на D:
+- [ ] Решить вопрос с установкой Veeam B&R если нужны бэкапы
