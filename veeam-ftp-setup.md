@@ -3,7 +3,7 @@
 **Server:** ITfreshFTP (37.228.92.57)
 **OS:** Windows Server 2025 Standard (Build 26100)
 **Setup date:** 2026-04-12
-**Last updated:** 2026-04-13 (audit)
+**Last updated:** 2026-04-13 (audit + fixes)
 **Password:** `Evgeniy@201028!!!` (user: администратор)
 
 ---
@@ -23,8 +23,9 @@
 
 - **Type:** DedupAndCompress (native WS2025 ReFS dedup)
 - **Schedule:** Daily at 02:00, duration 8 hours
-- **Service:** `refsdedupsvc` (Running, StartType: Manual)
-- **NTFS Dedup feature:** Installed, but **не настроена** на томах (Get-DedupVolume пустой)
+- **Service:** `refsdedupsvc` (Running, **StartType: Automatic** — исправлено 2026-04-13)
+- **NTFS Dedup feature:** Installed, but не используется (Get-DedupVolume пустой — это нормально, работает ReFS dedup)
+- **Назначение сервера:** FTP-хранилище для бэкап-копий клиентов. Veeam B&R не используется — клиенты заливают копии по FTP.
 - **First full run:** started manually 2026-04-13
 
 ### Статус по томам (аудит 2026-04-13)
@@ -36,9 +37,10 @@
 | G: | True | **LZ4** level 1 | 923.88 MiB | 510.23 GiB | 13.04.2026 01:29 | 52m | 14.04.2026 02:00 |
 
 **Замечания:**
-- E: настроен на ZSTD, а F: и G: на LZ4 — возможно нужно выровнять на ZSTD для лучшего сжатия
-- Deduplication = 0 B на всех томах — дедупликация не срабатывает, только compression
-- NTFS Dedup feature установлена, но **не привязана** ни к одному тому (Get-DedupVolume пустой)
+- E: использует ZSTD, F: и G: используют LZ4 — формат зашит в метаданные тома при первом включении, **сменить без пересоздания тома нельзя** (Enable-ReFSDedup не имеет параметра CompressionFormat)
+- LZ4 быстрее при сжатии/разжатии, ZSTD лучше по ratio — для FTP-бэкапов оба варианта приемлемы
+- Deduplication = 0 B на всех томах — файлы уникальные (бэкапы разных клиентов), это нормально
+- Full dedup jobs запущены на всех томах 2026-04-13
 
 ### Dedup Commands
 
@@ -181,13 +183,19 @@ Desktop shortcut "FTP Monitor" on administrator desktop runs `C:\FTP_Monitor.ps1
 
 ### Key Findings
 
-1. **Veeam Backup & Replication НЕ установлен** на этом сервере (ни в Program Files, ни в реестре)
-2. **FileZilla Server НЕ установлен** — сервис отсутствует, exe не найден. FTP работает через **IIS FTP (ftpsvc)**
-3. **ReFS дедупликация ВКЛЮЧЕНА** на всех 3 томах (E:, F:, G:) — но compression format разный (E: = ZSTD, F:/G: = LZ4)
-4. **Дедупликация = 0 B** — блоки не дедуплицируются, работает только сжатие
-5. **NTFS Dedup feature** установлена, но **не настроена** ни на одном томе
-6. **refsdedupsvc StartType = Manual** — после перезагрузки сервис не запустится автоматически
-7. **Диск D:** смонтирован ISO образ (SSS_X64FRE_RU-RU_DV9, UDF) — можно отмонтировать
+1. **Veeam B&R не используется** — сервер является FTP-хранилищем, клиенты заливают бэкап-копии по FTP
+2. **FileZilla Server НЕ установлен** — FTP работает через **IIS FTP (ftpsvc)**
+3. **ReFS дедупликация ВКЛЮЧЕНА** на всех 3 томах (E:, F:, G:) — E: = ZSTD, F:/G: = LZ4
+4. **Дедупликация = 0 B** — файлы уникальные (бэкапы разных клиентов), работает только compression — это нормально
+5. **NTFS Dedup feature** установлена, но не используется (ReFS dedup работает отдельно)
+
+### Applied Fixes (2026-04-13)
+
+- [x] `refsdedupsvc` переведён в **StartType=Automatic** (был Manual)
+- [x] Расписание F: восстановлено (daily 02:00, 8h) — было сброшено при disable/enable
+- [x] Запущены full dedup jobs на E:, F:, G:
+- [ ] ~~Сменить LZ4 на ZSTD для F: и G:~~ — **невозможно** без пересоздания тома, формат зашит в метаданные ReFS
+- [ ] Отмонтировать ISO на D: — VMware virtual CD-ROM, нужно отключить через ESXi
 
 ### Services Status
 
@@ -195,16 +203,8 @@ Desktop shortcut "FTP Monitor" on administrator desktop runs `C:\FTP_Monitor.ps1
 |---------|--------|-----------|
 | ftpsvc (IIS FTP) | Running | Automatic |
 | W3SVC (IIS Web) | Running | Automatic |
-| refsdedupsvc (ReFS Dedup) | Running | **Manual** |
+| refsdedupsvc (ReFS Dedup) | Running | **Automatic** (fixed) |
 
 ### Firewall (actual open ports)
 
 21, 22, 80, 135, 443, 445, 990, 3389, 5985, 7250, 8172, 9955, 60000-65535 TCP + various UDP
-
-### Actions Required
-
-- [ ] Перевести `refsdedupsvc` в StartType=Automatic
-- [ ] Выровнять compression на ZSTD для F: и G: (сейчас LZ4)
-- [ ] Удалить из документации упоминания FileZilla Server (реально работает IIS FTP)
-- [ ] Отмонтировать ISO на D:
-- [ ] Решить вопрос с установкой Veeam B&R если нужны бэкапы
